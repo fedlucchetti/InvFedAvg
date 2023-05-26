@@ -1,0 +1,33 @@
+#!/bin/bash
+args=("$@")
+DEV_CONTAINER="federated_learning_dev_gpu_1"
+
+
+## define volumes to be mounted
+ROOT=$(pwd)
+DATAPATH=$(pwd)/data
+BINPATH=$(pwd)/fedlearning
+EXPPATH=$(pwd)/experiments
+RESULTSPATH=$(pwd)/results
+
+ROOTDESTPATH=/home/federated_gmcc
+BINDESTPATH=/home/federated_gmcc/fedlearning
+DATADESTPATH=/home/federated_gmcc/data
+EXPDISTPATH=/home/federated_gmcc/experiments
+RESULTSDISTPATH=/home/federated_gmcc/results
+
+user="${USER}"
+## build container
+docker run -itd \
+  --gpus '"device=1"' \
+  -e NVIDIA_VISIBLE_DEVICES=all \
+  -e DOCKER_USER="${user}" \
+  -e USER="${user}" \
+  --name "${DEV_CONTAINER}" \
+  --hostname $HOSTNAME'_DOCKER_1'\
+  -v ${DATAPATH}:${DATADESTPATH} \
+  -v ${BINPATH}:${BINDESTPATH} \
+  -v ${EXPPATH}:${EXPDISTPATH} \
+  -v ${RESULTSPATH}:${RESULTSDISTPATH} \
+  -it federated-tf:latest \
+  /bin/bash

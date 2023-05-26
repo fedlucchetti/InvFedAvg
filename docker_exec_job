@@ -1,0 +1,16 @@
+#!/bin/bash
+
+args=("$@")
+DEV_CONTAINER="federated_learning_dev_gpu_${args[1]}"
+echo $DEV_CONTAINER
+
+
+if [ "${args[0]}" = "enter" ]; then
+  echo "start options"
+  docker exec -it ${DEV_CONTAINER} bash
+elif [ "${args[0]}" = "rm" ]; then
+  docker stop container ${DEV_CONTAINER}
+  docker rm   container ${DEV_CONTAINER}
+else
+  echo "\n unknown option"
+fi

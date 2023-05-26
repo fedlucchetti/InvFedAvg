@@ -1,0 +1,3 @@
+#!/bin/bash
+## build image from dockerfile
+docker build . -t federated-tf
