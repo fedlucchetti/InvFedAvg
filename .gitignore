@@ -1,2 +1,6 @@
 *npz
 *pyc
+*.pb
+*.pt
+*data-*
+*index
